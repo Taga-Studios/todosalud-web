@@ -5,12 +5,16 @@ import './styles.css';
 const ASSETS = {
   logo: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Cfit%3Dcrop%2Cq%3D95/RyI6fLOGiYFfhlfF/logo-todo-salud-blanco-saDHZ74gkwAPfYfQ.png',
   hero: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D1120%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/co.pnggdg-uOZM6XQjZW1UABbY.png',
+  heroMobile: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D375%2Ch%3D511%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/co.pnggdg-uOZM6XQjZW1UABbY.png',
   iso: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D1113%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/chatgpt-image-2-feb-2026-01_04_03-0wN6TwdUhU11qAdw.png',
+  isoMobile: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D375%2Ch%3D499%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/chatgpt-image-2-feb-2026-01_04_03-0wN6TwdUhU11qAdw.png',
   quality: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D640%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/insurance-G9g4BwLR7sX5kHDe.png',
+  qualityMobile: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D375%2Ch%3D359%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/insurance-G9g4BwLR7sX5kHDe.png',
   product: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D640%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/1-FPQaHaTxMWzbOD2s.png',
+  productMobile: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D375%2Ch%3D364%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/1-FPQaHaTxMWzbOD2s.png',
   productsHero: 'https://images.unsplash.com/photo-1702788176231-04b19d9e3131?auto=format&fit=crop&w=1920',
-  ana: 'https://images.unsplash.com/photo-1683349379021-7877469bcf71?auto=format&fit=crop&h=112&w=112',
-  luis: 'https://images.unsplash.com/photo-1603823998094-ebcdbb5d9f18?auto=format&fit=crop&h=112&w=112',
+  ana: 'https://images.unsplash.com/photo-1683349379021-7877469bcf71?auto=format&fit=crop&h=48&w=48',
+  luis: 'https://images.unsplash.com/photo-1603823998094-ebcdbb5d9f18?auto=format&fit=crop&h=48&w=48',
 };
 
 const WHATSAPP_URL = 'https://wa.me/584145642629?text=Hola%2C+podrian+darme+m%C3%A1s+informaci%C3%B3n+de+sus+producto%3F';
@@ -37,6 +41,16 @@ function useRouter() {
 
 function App() {
   const { pathname, navigate } = useRouter();
+
+  useEffect(() => {
+    if (pathname.startsWith('/productos')) {
+      document.title = 'Todo Salud C.A: Productos Médicos Confiables | Todo Salud c.a';
+    } else if (pathname.startsWith('/contactanos')) {
+      document.title = 'Contacto Todo Salud C.A - Productos Médicos | Todo Salud c.a';
+    } else {
+      document.title = 'Todo Salud C.A: Productos Médicos Confiables | Todo Salud c.a';
+    }
+  }, [pathname]);
 
   let page = <Home navigate={navigate} />;
   if (pathname.startsWith('/productos')) page = <Products />;
@@ -97,6 +111,15 @@ function Header({ pathname, navigate }) {
   );
 }
 
+function ResponsiveImage({ desktop, mobile, alt = '', className = '' }) {
+  return (
+    <picture>
+      <source media="(max-width: 600px)" srcSet={mobile} />
+      <img src={desktop} alt={alt} className={className} />
+    </picture>
+  );
+}
+
 function Home({ navigate }) {
   return (
     <>
@@ -118,7 +141,7 @@ function Home({ navigate }) {
           </div>
 
           <div className="hero-image-wrap">
-            <img src={ASSETS.hero} alt="" className="hero-image" />
+            <ResponsiveImage desktop={ASSETS.hero} mobile={ASSETS.heroMobile} className="hero-image" />
           </div>
         </div>
       </section>
@@ -129,7 +152,7 @@ function Home({ navigate }) {
             <h2>Certificación ISO</h2>
           </div>
           <div className="iso-image-wrap">
-            <img src={ASSETS.iso} alt="" />
+            <ResponsiveImage desktop={ASSETS.iso} mobile={ASSETS.isoMobile} />
           </div>
         </div>
       </section>
@@ -137,10 +160,10 @@ function Home({ navigate }) {
       <section className="quality-section">
         <div className="quality-grid">
           <div className="quality-card quality-card-image">
-            <img src={ASSETS.quality} alt="" />
+            <ResponsiveImage desktop={ASSETS.quality} mobile={ASSETS.qualityMobile} />
           </div>
           <div className="quality-card quality-card-image">
-            <img src={ASSETS.product} alt="" />
+            <ResponsiveImage desktop={ASSETS.product} mobile={ASSETS.productMobile} />
           </div>
         </div>
         <div className="quality-heading">
@@ -155,7 +178,7 @@ function Products() {
   return (
     <>
       <section className="products-hero" aria-label="Productos Todo Salud">
-        <img src={ASSETS.productsHero} alt="Smiling female healthcare professional holding medical disposable gloves box." />
+        <img src={ASSETS.productsHero} alt="woman wearing yellow long-sleeved dress under white clouds and blue sky during daytime" />
       </section>
 
       <section className="testimonials-section">
