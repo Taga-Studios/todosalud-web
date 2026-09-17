@@ -53,9 +53,7 @@ img { display: block; max-width: 100%; }
 .btn-outline { border: 1px solid #3da954; background: #fff; color: #39a650; }
 .trust-badges { display: flex; gap: 34px; color: #596269; font-size: 16px; }
 .trust-badges span { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-.trust-badges b { width: 22px; height: 22px; display: inline-grid; place-items: center; color: #15bf5d; font-size: 14px; line-height: 1; }
-.award-icon { border: 2px dotted #15bf5d; border-radius: 50%; }
-.shield-icon { border: 2px solid #15bf5d; border-radius: 45% 45% 55% 55%; }
+.trust-badges img { width: 22px; height: 22px; object-fit: contain; }
 .hero-image { width: 100%; align-self: stretch; display: flex; align-items: center; }
 .hero-image img { width: 100%; max-height: 760px; object-fit: contain; }
 
@@ -81,7 +79,7 @@ img { display: block; max-width: 100%; }
 .product-category { color: var(--green-accent); font-size: 13px; font-weight: 600; }
 .product-content h3 { margin: 11px 0 13px; font-size: 23px; line-height: 1.25; }
 .product-content p { margin: 0 0 24px; color: var(--muted); font-size: 15px; line-height: 1.65; }
-.product-content a { min-height: 48px; margin-top: auto; display: grid; place-items: center; border-radius: 10px; background: linear-gradient(90deg, #17c55d, #10ae49); color: #fff; font-weight: 500; text-decoration: none; box-shadow: 0 6px 12px rgba(22, 190, 91, .23); }
+.product-content a, .product-content button { min-height: 48px; margin-top: auto; display: grid; place-items: center; border: 0; border-radius: 10px; background: linear-gradient(90deg, #17c55d, #10ae49); color: #fff; font-weight: 500; text-decoration: none; box-shadow: 0 6px 12px rgba(22, 190, 91, .23); cursor: pointer; }
 
 .about-section { padding: 82px 0 112px; background: var(--green-pale); }
 .about-inner > .section-title:first-child h2 { color: var(--green); }
@@ -190,7 +188,7 @@ img { display: block; max-width: 100%; }
   .hero-buttons { gap: 12px; justify-content: flex-start; }
   .btn { min-width: 0; min-height: 45px; padding: 0 18px; font-size: 13px; }
   .trust-badges { gap: 18px; justify-content: flex-start; font-size: 12px; }
-  .trust-badges b { width: 18px; height: 18px; font-size: 11px; }
+  .trust-badges img { width: 18px; height: 18px; }
   .hero-image { width: 100%; }
   .hero-image img { max-height: none; }
   .section-title { margin-bottom: 35px; }

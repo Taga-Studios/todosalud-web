@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 
 const ASSETS = {
-  logo: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Cfit%3Dcrop%2Cq%3D95/RyI6fLOGiYFfhlfF/logo-todo-salud-blanco-saDHZ74gkwAPfYfQ.png',
-  hero: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D1120%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/co.pnggdg-uOZM6XQjZW1UABbY.png',
-  heroMobile: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D375%2Ch%3D511%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/co.pnggdg-uOZM6XQjZW1UABbY.png',
-  products: 'https://assets.zyrosite.com/cdn-cgi/image/format%3Dauto%2Cw%3D768%2Ch%3D1113%2Cfit%3Dcrop/RyI6fLOGiYFfhlfF/chatgpt-image-2-feb-2026-01_04_03-0wN6TwdUhU11qAdw.png',
+  logo: '/assets/logo-todo-salud.png',
+  hero: '/assets/productos-rm.jpg',
+  heroMobile: '/assets/productos-rm.jpg',
+  products: '/assets/productos-rm.jpg',
+  qualityIcon: '/assets/calidad-cumplimiento.png',
+  serviceIcon: '/assets/atencion-personalizada.png',
   lab: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85',
   trust: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=900&q=85',
   service: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85',
@@ -99,7 +101,7 @@ function Home({ navigate }) {
               <button className="btn btn-primary" type="button" onClick={() => navigate('/productos')}>Ver Produtos</button>
               <a className="btn btn-outline" href={getWhatsAppUrl('Hola, podrían darme más información de sus productos?')} target="_blank" rel="noreferrer">Contacto</a>
             </div>
-            <div className="trust-badges"><span><b className="award-icon">✓</b>Certificación ISO</span><span><b className="shield-icon">✓</b>Garantía de Calidad</span></div>
+            <div className="trust-badges"><span><img src={ASSETS.serviceIcon} alt="" />Certificación ISO</span><span><img src={ASSETS.qualityIcon} alt="" />Garantía de Calidad</span></div>
           </div>
           <picture className="hero-image"><source media="(max-width: 640px)" srcSet={ASSETS.heroMobile} /><img src={ASSETS.hero} alt="Profesional de la salud con productos R&M Descartables" /></picture>
         </div>
@@ -107,7 +109,7 @@ function Home({ navigate }) {
 
       <section className="featured section">
         <SectionTitle title="Productos" accent="Destacados" subtitle="Descubre nuestra selección de artículos médicos más solicitados" />
-        <div className="product-grid featured-grid">{PRODUCTS.slice(0, 3).map((product) => <ProductCard key={product.title} product={product} />)}</div>
+        <div className="product-grid featured-grid">{PRODUCTS.slice(0, 3).map((product) => <ProductCard key={product.title} product={product} navigate={navigate} contactRoute />)}</div>
       </section>
 
       <section className="about-section">
@@ -138,17 +140,18 @@ function Products() {
   return <section className="catalog section"><SectionTitle title="Catálogo de" accent="Productos" subtitle="Calidad y confianza en cada insumo médico." /><div className="product-grid catalog-grid">{PRODUCTS.map((product) => <ProductCard key={product.title} product={product} />)}</div></section>;
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product, navigate, contactRoute = false }) {
   return (
     <article className="product-card">
       <div className={`product-image product-image--${product.crop}`}><img src={ASSETS.products} alt={product.title} /></div>
-      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p><a href={getWhatsAppUrl(`Hola, quisiera cotizar: ${product.title}`)} target="_blank" rel="noreferrer">Cotizar</a></div>
+      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p>{contactRoute ? <button type="button" onClick={() => navigate(`/contactanos?producto=${encodeURIComponent(product.title)}`)}>Cotizar</button> : <a href={getWhatsAppUrl(`Hola, quisiera cotizar: ${product.title}`)} target="_blank" rel="noreferrer">Cotizar</a>}</div>
     </article>
   );
 }
 
 function Contact() {
-  const [form, setForm] = useState({ name: '', location: '', message: '' });
+  const requestedProduct = new URLSearchParams(window.location.search).get('producto');
+  const [form, setForm] = useState({ name: '', location: '', message: requestedProduct ? `Quisiera cotizar: ${requestedProduct}` : '' });
   const submit = (event) => {
     event.preventDefault();
     const text = `Hola, soy ${form.name || 'un cliente'} desde ${form.location || 'Venezuela'}. ${form.message || 'Quisiera información sobre sus productos.'}`;
