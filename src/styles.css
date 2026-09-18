@@ -41,6 +41,20 @@ img { display: block; max-width: 100%; }
 .bag::after { content: ''; position: absolute; top: 3px; left: 8px; width: 8px; height: 9px; border: 1.6px solid #fff; border-bottom: 0; border-radius: 7px 7px 0 0; }
 .hamburger, .mobile-nav { display: none; }
 
+.cart-layer { position: fixed; inset: 0; z-index: 90; }
+.cart-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(7, 21, 13, .48); cursor: pointer; }
+.cart-drawer { position: absolute; top: 0; right: 0; width: min(430px, 100%); height: 100%; display: flex; flex-direction: column; background: #fff; color: var(--ink); box-shadow: -14px 0 36px rgba(0, 0, 0, .18); animation: cart-slide-in .22s ease-out both; }
+.cart-header { min-height: 78px; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e9ecea; }
+.cart-header h2 { margin: 0; font-size: 21px; }
+.cart-close { width: 42px; height: 42px; display: grid; place-items: center; background: transparent; color: #28312c; font-size: 33px; line-height: 1; cursor: pointer; }
+.cart-empty { flex: 1; padding: 60px 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.cart-empty-bag { position: relative; width: 54px; height: 58px; margin-bottom: 28px; border: 2px solid #9aa29d; border-radius: 3px; }
+.cart-empty-bag::before { content: ''; position: absolute; top: -15px; left: 14px; width: 22px; height: 20px; border: 2px solid #9aa29d; border-bottom: 0; border-radius: 14px 14px 0 0; }
+.cart-empty h3 { margin: 0 0 10px; font-size: 23px; }
+.cart-empty p { margin: 0 0 28px; color: var(--muted); font-size: 15px; }
+.cart-empty button { min-height: 48px; padding: 0 28px; border-radius: 25px; background: var(--green); color: #fff; font-weight: 600; cursor: pointer; }
+@keyframes cart-slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
 .hero { background: var(--green-pale); }
 .hero-inner { width: var(--page); min-height: 900px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 518px; gap: 35px; align-items: start; }
 .hero-copy { padding-top: 108px; }
@@ -138,6 +152,10 @@ img { display: block; max-width: 100%; }
 .footer-grid a { color: #3fdc76; font-weight: 600; text-decoration: none; }
 .socials { display: flex; gap: 12px; margin-top: 28px; }
 .socials a { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; color: #fff; text-decoration: none; }
+.socials a:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+.socials svg { width: 16px; height: 16px; display: block; fill: currentColor; }
+.socials a[aria-label*="Instagram"] svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
+.socials .instagram-dot { fill: currentColor; stroke: none; }
 .copyright { padding: 22px 16px; border-top: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.48); font-size: 13px; text-align: center; }
 
 .whatsapp-float { position: fixed; right: 22px; bottom: 22px; z-index: 45; width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%; background: #20c968; color: #fff; font-size: 27px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,.2); }
@@ -181,6 +199,8 @@ img { display: block; max-width: 100%; }
   .logo-button img { width: 154px; height: 42px; }
   .header-actions { gap: 8px; }
   .bag { transform: scale(.86); }
+  .cart-header { min-height: 66px; padding: 0 20px; }
+  .cart-empty { padding: 44px 24px; }
   .mobile-nav { top: 62px; }
   .hero-inner { padding: 40px 0 54px; gap: 28px; }
   .hero-copy { text-align: left; }

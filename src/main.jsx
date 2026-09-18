@@ -69,7 +69,21 @@ function App() {
 
 function Header({ pathname, navigate }) {
   const [open, setOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!cartOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setCartOpen(false);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [cartOpen]);
   const go = (path) => { navigate(path); setOpen(false); };
   return (
     <header className="header">
@@ -81,7 +95,7 @@ function Header({ pathname, navigate }) {
             <button className={pathname.startsWith('/productos') ? 'active' : ''} onClick={() => go('/productos')}>Productos</button>
             <button className={pathname.startsWith('/contactanos') ? 'active' : ''} onClick={() => go('/contactanos')}>Contactanos</button>
           </nav>
-          <button className="bag" type="button" aria-label="Carrito de compras"><span /></button>
+          <button className="bag" type="button" aria-label="Abrir carrito de compras" aria-controls="cart-drawer" aria-expanded={cartOpen} onClick={() => setCartOpen(true)}><span /></button>
           <button className={`hamburger ${open ? 'open' : ''}`} type="button" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} onClick={() => setOpen((value) => !value)}><span /><span /><span /></button>
         </div>
       </div>
@@ -90,6 +104,23 @@ function Header({ pathname, navigate }) {
         <button className={pathname.startsWith('/productos') ? 'active' : ''} onClick={() => go('/productos')}>Productos</button>
         <button className={pathname.startsWith('/contactanos') ? 'active' : ''} onClick={() => go('/contactanos')}>Contactanos</button>
       </nav>
+      {cartOpen && (
+        <div className="cart-layer">
+          <button className="cart-backdrop" type="button" aria-label="Cerrar carrito" onClick={() => setCartOpen(false)} />
+          <aside className="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+            <div className="cart-header">
+              <h2 id="cart-title">Carrito de compras</h2>
+              <button className="cart-close" type="button" aria-label="Cerrar carrito" onClick={() => setCartOpen(false)}>×</button>
+            </div>
+            <div className="cart-empty">
+              <span className="cart-empty-bag" aria-hidden="true" />
+              <h3>Tu carrito está vacío</h3>
+              <p>Aún no has agregado productos.</p>
+              <button type="button" onClick={() => { setCartOpen(false); go('/productos'); }}>Ver productos</button>
+            </div>
+          </aside>
+        </div>
+      )}
     </header>
   );
 }
@@ -164,7 +195,8 @@ function Contact() {
   const submit = (event) => {
     event.preventDefault();
     const text = `Hola, soy ${form.name || 'un cliente'} desde ${form.location || 'Venezuela'}. ${form.message || 'Quisiera información sobre sus productos.'}`;
-    window.open(getWhatsAppUrl(text), '_blank', 'noopener,noreferrer');
+    const newWindow = window.open(getWhatsAppUrl(text), '_blank', 'noopener,noreferrer');
+    if (!newWindow) window.location.assign(getWhatsAppUrl(text));
   };
   return (
     <section className="contact-page">
@@ -190,11 +222,19 @@ function ValueCard({ image, title, children }) {
   return <article className="value-card"><img src={image} alt="" /><div><h3>{title}</h3><p>{children}</p></div></article>;
 }
 
+function FacebookIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 22v-9h3l.45-3.5H13.6V7.27c0-1.01.28-1.7 1.74-1.7h1.86V2.44c-.32-.04-1.43-.14-2.72-.14-2.69 0-4.53 1.64-4.53 4.66V9.5H6.9V13h3.05v9h3.65Z" /></svg>;
+}
+
+function InstagramIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle className="instagram-dot" cx="17.4" cy="6.7" r="1" /></svg>;
+}
+
 function Footer({ navigate }) {
   return (
     <footer className="footer">
       <div className="footer-grid section">
-        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" target="_blank" rel="noreferrer" aria-label="Facebook">f</a><a href="https://www.instagram.com/todosalud_bqto/" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a></div></div>
+        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" target="_blank" rel="noopener noreferrer" aria-label="Visitar Facebook de Todo Salud"><FacebookIcon /></a><a href="https://www.instagram.com/todosalud_bqto/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Todo Salud"><InstagramIcon /></a></div></div>
         <div><h4>ENLACES RÁPIDOS</h4><button onClick={() => navigate('/')}>Inicio</button><button onClick={() => navigate('/productos')}>Productos</button><button onClick={() => navigate('/')}>Nosotros</button><button onClick={() => navigate('/contactanos')}>Contacto</button></div>
         <div><h4>CATEGORÍAS</h4><p>Artículos desechables</p><p>Marca Propia</p><p>Protección personal</p><p>Médico Instrumental</p></div>
         <div><h4>CONTACTO</h4><a href="tel:+584145642629">+58 414-5642629</a></div>
@@ -205,7 +245,7 @@ function Footer({ navigate }) {
 }
 
 function getWhatsAppUrl(message) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
 }
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
