@@ -62,7 +62,7 @@ function App() {
       <Header pathname={pathname} navigate={navigate} />
       <main>{page}</main>
       <Footer navigate={navigate} />
-      <a className="whatsapp-float" href={getWhatsAppUrl('Hola, podrían darme más información de sus productos?')} target="_blank" rel="noreferrer" aria-label="Contactar por WhatsApp"><span>☏</span></a>
+      <a className="whatsapp-float" href={getWhatsAppUrl('Hola, podrían darme más información de sus productos?')} aria-label="Contactar por WhatsApp"><span>☏</span></a>
     </div>
   );
 }
@@ -135,7 +135,7 @@ function Home({ navigate }) {
             <p>Distribuidora líder en artículos médicos desechables con marca propia. Confianza, calidad y servicio excepcional para profesionales de la salud.</p>
             <div className="hero-buttons">
               <button className="btn btn-primary" type="button" onClick={() => navigate('/productos')}>Ver Produtos</button>
-              <a className="btn btn-outline" href={getWhatsAppUrl('Hola, podrían darme más información de sus productos?')} target="_blank" rel="noreferrer">Contacto</a>
+              <a className="btn btn-outline" href={getWhatsAppUrl('Hola, podrían darme más información de sus productos?')}>Contacto</a>
             </div>
             <div className="trust-badges"><span><img src={ASSETS.serviceIcon} alt="" />Certificación ISO</span><span><img src={ASSETS.qualityIcon} alt="" />Garantía de Calidad</span></div>
           </div>
@@ -184,7 +184,7 @@ function ProductCard({ product }) {
   return (
     <article className="product-card">
       <div className={`product-image product-image--${product.crop}`}><img src={product.image} alt={product.title} /></div>
-      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p><a href={getWhatsAppUrl(`Hola quiero más información del producto ${product.title}`)} target="_blank" rel="noreferrer">Cotizar</a></div>
+      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p><a href={getWhatsAppUrl(`Hola quiero más información del producto ${product.title}`)}>Cotizar</a></div>
     </article>
   );
 }
@@ -234,9 +234,9 @@ function Footer({ navigate }) {
   return (
     <footer className="footer">
       <div className="footer-grid section">
-        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" target="_blank" rel="noopener noreferrer" aria-label="Visitar Facebook de Todo Salud"><FacebookIcon /></a><a href="https://www.instagram.com/todosalud_bqto/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Todo Salud"><InstagramIcon /></a></div></div>
+        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" aria-label="Visitar Facebook de Todo Salud"><FacebookIcon /></a><a href="https://www.instagram.com/todosalud_bqto/" aria-label="Visitar Instagram de Todo Salud"><InstagramIcon /></a></div></div>
         <div><h4>ENLACES RÁPIDOS</h4><button onClick={() => navigate('/')}>Inicio</button><button onClick={() => navigate('/productos')}>Productos</button><button onClick={() => navigate('/')}>Nosotros</button><button onClick={() => navigate('/contactanos')}>Contacto</button></div>
-        <div><h4>CATEGORÍAS</h4><p>Artículos desechables</p><p>Marca Propia</p><p>Protección personal</p><p>Médico Instrumental</p></div>
+        <div className="footer-categories"><h4>CATEGORÍAS</h4><button type="button" onClick={() => navigate('/productos')}>Artículos desechables</button><button type="button" onClick={() => navigate('/productos')}>Marca Propia</button><button type="button" onClick={() => navigate('/productos')}>Protección personal</button><button type="button" onClick={() => navigate('/productos')}>Médico Instrumental</button></div>
         <div><h4>CONTACTO</h4><a href="tel:+584145642629">+58 414-5642629</a></div>
       </div>
       <div className="copyright">© 2026 TodoSalud C.A. Todos los derechos reservados.</div>
