@@ -151,10 +151,10 @@ img { display: block; max-width: 100%; }
 .footer-grid button { display: block; padding: 5px 0; background: none; cursor: pointer; }
 .footer-grid a { color: #3fdc76; font-weight: 600; text-decoration: none; }
 .socials { display: flex; gap: 12px; margin-top: 28px; }
-.socials a { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; color: #fff; text-decoration: none; }
-.socials a:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+.socials button { width: 28px; height: 28px; padding: 0; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; background: transparent; color: #fff; cursor: pointer; }
+.socials button:hover { border-color: #fff; background: rgba(255,255,255,.1); }
 .socials svg { width: 16px; height: 16px; display: block; fill: currentColor; }
-.socials a[aria-label*="Instagram"] svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
+.socials button[aria-label*="Instagram"] svg { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .socials .instagram-dot { fill: currentColor; stroke: none; }
 .copyright { padding: 22px 16px; border-top: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.48); font-size: 13px; text-align: center; }
 

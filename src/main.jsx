@@ -230,11 +230,15 @@ function InstagramIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle className="instagram-dot" cx="17.4" cy="6.7" r="1" /></svg>;
 }
 
+function openExternal(url) {
+  window.location.assign(url);
+}
+
 function Footer({ navigate }) {
   return (
     <footer className="footer">
       <div className="footer-grid section">
-        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" aria-label="Visitar Facebook de Todo Salud"><FacebookIcon /></a><a href="https://www.instagram.com/todosalud_bqto/" aria-label="Visitar Instagram de Todo Salud"><InstagramIcon /></a></div></div>
+        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><button type="button" onClick={() => openExternal('https://www.facebook.com/todosalud.bqto')} aria-label="Visitar Facebook de Todo Salud"><FacebookIcon /></button><button type="button" onClick={() => openExternal('https://www.instagram.com/todosalud_bqto/')} aria-label="Visitar Instagram de Todo Salud"><InstagramIcon /></button></div></div>
         <div><h4>ENLACES RÁPIDOS</h4><button onClick={() => navigate('/')}>Inicio</button><button onClick={() => navigate('/productos')}>Productos</button><button onClick={() => navigate('/')}>Nosotros</button><button onClick={() => navigate('/contactanos')}>Contacto</button></div>
         <div className="footer-categories"><h4>CATEGORÍAS</h4><button type="button" onClick={() => navigate('/productos')}>Artículos desechables</button><button type="button" onClick={() => navigate('/productos')}>Marca Propia</button><button type="button" onClick={() => navigate('/productos')}>Protección personal</button><button type="button" onClick={() => navigate('/productos')}>Médico Instrumental</button></div>
         <div><h4>CONTACTO</h4><a href="tel:+584145642629">+58 414-5642629</a></div>
