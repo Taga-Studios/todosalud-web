@@ -6,23 +6,28 @@ const ASSETS = {
   logo: '/assets/logo-todo-salud.png',
   hero: '/assets/productos-rm.jpg',
   heroMobile: '/assets/productos-rm.jpg',
-  products: '/assets/productos-rm.jpg',
   qualityIcon: '/assets/calidad-cumplimiento.png',
   serviceIcon: '/assets/atencion-personalizada.png',
-  lab: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=85',
-  trust: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=900&q=85',
-  service: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85',
+  lab: '/assets/valor-calidad.png',
+  trust: '/assets/valor-transparencia.png',
+  service: '/assets/valor-atencion.png',
 };
 
 const WHATSAPP_NUMBER = '584145642629';
 
+const FEATURED_PRODUCTS = [
+  { category: 'CURACIÓN', title: 'Gasas Estériles', description: 'Sobres de gasas estériles de algodón hidrófilo para limpieza y protección de heridas.', image: '/assets/gasas-esteriles.png', crop: 'gasa' },
+  { category: 'INYECTABLES', title: 'Jeringas Desechables', description: 'Jeringas estériles de alta calidad y deslizamiento suave. Disponibles en varias medidas (3cc, 5cc, 10cc, 20cc).', image: '/assets/jeringas-desechables.png', crop: 'jeringa' },
+  { category: 'QUIRÚRGICO', title: 'Compresas Estériles', description: 'Compresas absorbentes de alta calidad, diseñadas para procedimientos quirúrgicos y control de fluidos.', image: '/assets/compresas-esteriles.png', crop: 'compresa' },
+];
+
 const PRODUCTS = [
-  { category: 'CURACIÓN', title: 'Gasas Estériles', description: 'Sobres de gasas estériles de algodón hidrófilo para limpieza y protección de heridas.', crop: 'gasa' },
-  { category: 'INYECTABLES', title: 'Jeringas Desechables', description: 'Jeringas estériles de alta calidad y deslizamiento suave. Disponibles en varias medidas.', crop: 'jeringa' },
-  { category: 'QUIRÚRGICO', title: 'Compresas Estériles', description: 'Compresas absorbentes de alta calidad, diseñadas para procedimientos quirúrgicos y control de fluidos.', crop: 'compresa' },
-  { category: 'VENOCLISIS', title: 'Equipo Macro Gotero', description: 'Equipo de venoclisis normogotero estéril con cámara flexible y filtro de fluidos.', crop: 'macro' },
-  { category: 'INYECTABLES', title: 'Jeringa 3cc Luer Lock', description: 'Jeringa descartable de 3cc con aguja 21G x 1 1/2. Conexión Luer Lock segura.', crop: 'jeringa-wide' },
-  { category: 'QUIRÚRGICO', title: 'Compresa de Laparotomía', description: 'Compresa prelavada de gran absorción para procedimientos y atención hospitalaria.', crop: 'compresa-wide' },
+  FEATURED_PRODUCTS[2],
+  { category: 'VENOCLISIS', title: 'Equipo Macro Gotero', description: 'Equipo de venoclisis normogotero estéril con cámara flexible y filtro de fluidos.', image: '/assets/equipo-macrogotero.png', crop: 'macro' },
+  { category: 'INYECTABLES', title: 'Jeringa 3cc Luer Lock', description: 'Jeringa descartable de 3cc con aguja 21G x 1 1/2. Conexión Luer Lock segura.', image: '/assets/jeringa-3cc.png', crop: 'jeringa-3cc' },
+  { category: 'INYECTABLES', title: 'Jeringa 20cc', description: 'Jeringa de gran capacidad (20ml) para administración de medicamentos o alimentación.', image: '/assets/jeringa-20cc.png', crop: 'jeringa-20cc' },
+  { category: 'INYECTABLES', title: 'Jeringa 5cc', description: 'Jeringa estándar de 5ml. Versatilidad para inyecciones intramusculares o intravenosas.', image: '/assets/jeringas-desechables.png', crop: 'jeringa' },
+  FEATURED_PRODUCTS[0],
 ];
 
 function useRouter() {
@@ -103,13 +108,17 @@ function Home({ navigate }) {
             </div>
             <div className="trust-badges"><span><img src={ASSETS.serviceIcon} alt="" />Certificación ISO</span><span><img src={ASSETS.qualityIcon} alt="" />Garantía de Calidad</span></div>
           </div>
-          <picture className="hero-image"><source media="(max-width: 640px)" srcSet={ASSETS.heroMobile} /><img src={ASSETS.hero} alt="Profesional de la salud con productos R&M Descartables" /></picture>
+          <svg className="hero-image" viewBox="0 0 200 200" preserveAspectRatio="none" role="img" aria-label="Profesional de la salud con productos R&M Descartables">
+            <defs><clipPath id="hero-blob"><path d="M1.97387 169.13C-5.79459 148.805 11.296 120.102 19.8413 98.9532C28.542 77.8041 28.3866 64.2082 36.1551 46.2178C43.7682 28.09 59.1497 5.56755 79.8138 0.898269C100.323 -3.63368 126.269 9.55016 150.662 27.678C175.21 45.6684 198.205 68.6028 199.914 92.9106C201.468 117.218 181.736 142.899 157.343 163.224C132.795 183.55 103.741 198.381 72.8222 199.892C42.0591 201.265 9.58696 189.455 1.97387 169.13Z" /></clipPath></defs>
+            <image href={ASSETS.hero} width="200" height="200" preserveAspectRatio="none" clipPath="url(#hero-blob)" />
+            <path className="hero-shape-border" d="M1.97387 169.13C-5.79459 148.805 11.296 120.102 19.8413 98.9532C28.542 77.8041 28.3866 64.2082 36.1551 46.2178C43.7682 28.09 59.1497 5.56755 79.8138 0.898269C100.323 -3.63368 126.269 9.55016 150.662 27.678C175.21 45.6684 198.205 68.6028 199.914 92.9106C201.468 117.218 181.736 142.899 157.343 163.224C132.795 183.55 103.741 198.381 72.8222 199.892C42.0591 201.265 9.58696 189.455 1.97387 169.13Z" />
+          </svg>
         </div>
       </section>
 
       <section className="featured section">
         <SectionTitle title="Productos" accent="Destacados" subtitle="Descubre nuestra selección de artículos médicos más solicitados" />
-        <div className="product-grid featured-grid">{PRODUCTS.slice(0, 3).map((product) => <ProductCard key={product.title} product={product} navigate={navigate} contactRoute />)}</div>
+        <div className="product-grid featured-grid">{FEATURED_PRODUCTS.map((product) => <ProductCard key={product.title} product={product} />)}</div>
       </section>
 
       <section className="about-section">
@@ -140,11 +149,11 @@ function Products() {
   return <section className="catalog section"><SectionTitle title="Catálogo de" accent="Productos" subtitle="Calidad y confianza en cada insumo médico." /><div className="product-grid catalog-grid">{PRODUCTS.map((product) => <ProductCard key={product.title} product={product} />)}</div></section>;
 }
 
-function ProductCard({ product, navigate, contactRoute = false }) {
+function ProductCard({ product }) {
   return (
     <article className="product-card">
-      <div className={`product-image product-image--${product.crop}`}><img src={ASSETS.products} alt={product.title} /></div>
-      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p>{contactRoute ? <button type="button" onClick={() => navigate(`/contactanos?producto=${encodeURIComponent(product.title)}`)}>Cotizar</button> : <a href={getWhatsAppUrl(`Hola, quisiera cotizar: ${product.title}`)} target="_blank" rel="noreferrer">Cotizar</a>}</div>
+      <div className={`product-image product-image--${product.crop}`}><img src={product.image} alt={product.title} /></div>
+      <div className="product-content"><span className="product-category">{product.category}</span><h3>{product.title}</h3><p>{product.description}</p><a href={getWhatsAppUrl(`Hola quiero más información del producto ${product.title}`)} target="_blank" rel="noreferrer">Cotizar</a></div>
     </article>
   );
 }
@@ -185,7 +194,7 @@ function Footer({ navigate }) {
   return (
     <footer className="footer">
       <div className="footer-grid section">
-        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><span>f</span><span>◎</span></div></div>
+        <div className="footer-brand"><img src={ASSETS.logo} alt="Todo Salud" /><p>Distribuidora líder de artículos médicos desechables con marca propia.</p><div className="socials"><a href="https://www.facebook.com/todosalud.bqto" target="_blank" rel="noreferrer" aria-label="Facebook">f</a><a href="https://www.instagram.com/todosalud_bqto/" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a></div></div>
         <div><h4>ENLACES RÁPIDOS</h4><button onClick={() => navigate('/')}>Inicio</button><button onClick={() => navigate('/productos')}>Productos</button><button onClick={() => navigate('/')}>Nosotros</button><button onClick={() => navigate('/contactanos')}>Contacto</button></div>
         <div><h4>CATEGORÍAS</h4><p>Artículos desechables</p><p>Marca Propia</p><p>Protección personal</p><p>Médico Instrumental</p></div>
         <div><h4>CONTACTO</h4><a href="tel:+584145642629">+58 414-5642629</a></div>
